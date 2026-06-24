@@ -4,11 +4,15 @@ import { getAvgRating, Movie } from "movies/MovieModel";
 import { getInitialMovies } from "data/initial";
 
 
-export const MovieCard = ({ movie, onDeleteMovie }: any) => {
+export const MovieCard = ({ movie, onDeleteMovie, onRateMovie }: any) => {
   const movieRating = getAvgRating(movie);
 
   const handleDelete = () => {
     onDeleteMovie(movie.id);    
+  };
+
+  const handleMovieRate = (i : number) => {
+    onRateMovie(movie.id, i);
   };
 
   return (
@@ -27,7 +31,7 @@ export const MovieCard = ({ movie, onDeleteMovie }: any) => {
         <div className="clearfix">
           <div className="float-left mt-1">
             {/* TODO: Implement rating functionality */}
-            <StarRating rating={movieRating} onRate={() => console.error('rating not implemented yet')} />
+            <StarRating rating={movieRating} onRate={(i) => handleMovieRate(i)} />
           </div>
           <div
             data-testid="movie-rating"

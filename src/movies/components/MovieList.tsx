@@ -17,12 +17,24 @@ export const MovieList = () => {
     setMovies(prev => prev.filter(movie => movie.id !== id));
   };
 
+
+  const rateMovie = (id: string, rating: number) => {
+    setMovies(prev =>
+      prev.map(movie =>
+        movie.id === id
+          ? { ...movie, ratings: [...movie.ratings, rating] }
+          : movie
+      )
+    );
+  };
+
+
   return (
     <div className="card-deck">
       {movies.map((movie, index) => (
         <Card key={index}>
           {/* TODO: implement displaying movies list */}
-          <MovieCard movie={movie}  onDeleteMovie={deleteMovie}/>
+          <MovieCard movie={movie}  onDeleteMovie={deleteMovie} onRateMovie={rateMovie}/>
         </Card>
       ))}
       {/* TODO: implement a toggle - show either a button or (after clicked) the form */}
