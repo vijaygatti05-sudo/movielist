@@ -1,19 +1,50 @@
+///////////////////////////////////////////////////////////////
+
+import { useState } from "react";
 import { InputField, Button } from "shared/components";
 
-export function AddMovieForm() {
-  const setter = () => console.error("AddMovieForm.setter not implemented yet");
+export function AddMovieForm({ onAddMovie }: any) {
+  const [url, setUrl] = useState("???");
+  const [title, setTitle] = useState("???");
+  const [subtitle, setSubtitle] = useState("???");
+  const [description, setDescription] = useState("???");
+
+  const handleSubmit = () => {
+    
+    onAddMovie({
+      id: crypto.randomUUID(),
+      imageUrl : "./Kingsglaive_Final_Fantasy_XV.jpg",
+      title,
+      subtitle,
+      description,
+      ratings : []
+    });
+    clearFields();
+  };
+
+  const clearFields = () => {
+    setUrl("???");
+    setTitle("???");
+    setSubtitle("???");
+    setDescription("???");
+  }
+
+  const handleClear = () => {
+    clearFields();
+      
+  };
 
   return (
-    <form className="p-4 ">
-      <InputField name="Url" value="???" setter={setter} />
-      <InputField name="Title" value="???" setter={setter} />
-      <InputField name="Subtitle" value="???" setter={setter} />
-      <InputField name="Description" value="???" setter={setter} />
+    <form className="p-4">
+      <InputField name="Url" value={url} setter={setUrl} />
+      <InputField name="Title" value={title} setter={setTitle} />
+      <InputField name="Subtitle" value={subtitle} setter={setSubtitle} />
+      <InputField name="Description" value={description} setter={setDescription}
+      />
+
       <div className="text-center">
-        {/* TODO: Implement form submission */}
-        <Button>Submit</Button>
-        {/* TODO: Implement form cancelling */}
-        <Button>Cancel</Button>
+        <Button onClick={handleSubmit}>Submit</Button>
+        <Button onClick={handleClear}>Cancel</Button>
       </div>
     </form>
   );

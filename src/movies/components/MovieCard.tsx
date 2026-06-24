@@ -1,11 +1,10 @@
 import { StarRating, Button } from "shared/components";
 
-import { getAvgRating } from "movies/MovieModel";
+import { getAvgRating, Movie } from "movies/MovieModel";
 import { getInitialMovies } from "data/initial";
 
-const movie = getInitialMovies()[0];
 
-export const MovieCard = () => {
+export const MovieCard = ({ movie }: any) => {
   const movieRating = getAvgRating(movie);
 
   return (

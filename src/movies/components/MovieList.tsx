@@ -3,17 +3,22 @@ import { AddMovieButton } from "./AddMovieButton";
 import { AddMovieForm } from "./AddMovieForm";
 import { Card } from "shared/components";
 import { getInitialMovies } from "data/initial";
-
-const movies = getInitialMovies();
+import { useState } from "react";
+import { Movie } from "movies/MovieModel";
 
 export const MovieList = () => {
+  const [movies, setMovies] = useState(getInitialMovies());
+
+  const addMovie = (newMovie: Movie) => {
+    setMovies(prev => [...prev, newMovie]);
+  };
 
   return (
     <div className="card-deck">
-      {movies.map((movie) => (
-        <Card>
+      {movies.map((movie, index) => (
+        <Card key={index}>
           {/* TODO: implement displaying movies list */}
-          <MovieCard />
+          <MovieCard movie={movie} />
         </Card>
       ))}
       {/* TODO: implement a toggle - show either a button or (after clicked) the form */}
@@ -21,7 +26,7 @@ export const MovieList = () => {
         <AddMovieButton />
       </Card>
       <Card>
-        <AddMovieForm />
+        <AddMovieForm onAddMovie={addMovie}/>
       </Card>
     </div>
   );
