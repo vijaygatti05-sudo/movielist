@@ -13,12 +13,16 @@ export const MovieList = () => {
     setMovies(prev => [...prev, newMovie]);
   };
 
+   const deleteMovie = (id : string) => {
+    setMovies(prev => prev.filter(movie => movie.id !== id));
+  };
+
   return (
     <div className="card-deck">
       {movies.map((movie, index) => (
         <Card key={index}>
           {/* TODO: implement displaying movies list */}
-          <MovieCard movie={movie} />
+          <MovieCard movie={movie}  onDeleteMovie={deleteMovie}/>
         </Card>
       ))}
       {/* TODO: implement a toggle - show either a button or (after clicked) the form */}

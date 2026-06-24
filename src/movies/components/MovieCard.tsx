@@ -4,8 +4,12 @@ import { getAvgRating, Movie } from "movies/MovieModel";
 import { getInitialMovies } from "data/initial";
 
 
-export const MovieCard = ({ movie }: any) => {
+export const MovieCard = ({ movie, onDeleteMovie }: any) => {
   const movieRating = getAvgRating(movie);
+
+  const handleDelete = () => {
+    onDeleteMovie(movie.id);    
+  };
 
   return (
     <div data-testid={`movie-item-${movie.id}`}>
@@ -17,7 +21,7 @@ export const MovieCard = ({ movie }: any) => {
           {movie.description}
         </p>
         {/* TODO: Implement delete functionality */}
-        <Button>Delete</Button>
+        <Button onClick={handleDelete}>Delete</Button>
       </div>
       <div className="card-footer">
         <div className="clearfix">
