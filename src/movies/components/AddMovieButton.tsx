@@ -1,6 +1,11 @@
-export function AddMovieButton() {
+export function AddMovieButton({ toggleAddForm }: any) {
+
+  const handleToggle = () => {
+    toggleAddForm();
+  };
+
   return (
-    <div
+    <div onClick={handleToggle}
       style={{
         cursor: "pointer",
         paddingTop: "7rem",

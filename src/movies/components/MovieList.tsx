@@ -8,6 +8,7 @@ import { Movie } from "movies/MovieModel";
 
 export const MovieList = () => {
   const [movies, setMovies] = useState(getInitialMovies());
+  const [showAddMovieForm, setShowAddMovieForm] = useState(false);
 
   const addMovie = (newMovie: Movie) => {
     setMovies(prev => [...prev, newMovie]);
@@ -28,6 +29,10 @@ export const MovieList = () => {
     );
   };
 
+  const toggleShowAddMovieForm = () => {
+    setShowAddMovieForm(prev => !prev );
+  };
+
 
   return (
     <div className="card-deck">
@@ -39,11 +44,13 @@ export const MovieList = () => {
       ))}
       {/* TODO: implement a toggle - show either a button or (after clicked) the form */}
       <Card>
-        <AddMovieButton />
+        <AddMovieButton toggleAddForm={toggleShowAddMovieForm} />
       </Card>
-      <Card>
-        <AddMovieForm onAddMovie={addMovie}/>
-      </Card>
+      { showAddMovieForm &&
+        <Card>
+          <AddMovieForm onAddMovie={addMovie}/>
+        </Card>
+      }
     </div>
   );
 };
