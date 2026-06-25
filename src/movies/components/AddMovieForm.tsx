@@ -2,16 +2,18 @@
 
 import { useState } from "react";
 import { InputField, Button } from "shared/components";
+import { useMovies } from "movies/MovieContext";
 
-export function AddMovieForm({ onAddMovie }: any) {
+export function AddMovieForm() {
   const [url, setUrl] = useState("???");
   const [title, setTitle] = useState("???");
   const [subtitle, setSubtitle] = useState("???");
   const [description, setDescription] = useState("???");
 
+    const { addMovie } = useMovies();
+
   const handleSubmit = () => {
-    
-    onAddMovie({
+        addMovie({
       id: crypto.randomUUID(),
       imageUrl : "./Kingsglaive_Final_Fantasy_XV.jpg",
       title,
@@ -19,6 +21,7 @@ export function AddMovieForm({ onAddMovie }: any) {
       description,
       ratings : []
     });
+
     clearFields();
   };
 

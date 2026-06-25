@@ -2,17 +2,19 @@ import { StarRating, Button } from "shared/components";
 
 import { getAvgRating, Movie } from "movies/MovieModel";
 import { getInitialMovies } from "data/initial";
+import { useMovies } from "movies/MovieContext";
 
 
-export const MovieCard = ({ movie, onDeleteMovie, onRateMovie }: any) => {
+export const MovieCard = ({ movie } : any) => {
   const movieRating = getAvgRating(movie);
+  const { deleteMovie, rateMovie } = useMovies();
 
   const handleDelete = () => {
-    onDeleteMovie(movie.id);    
+    deleteMovie(movie.id);    
   };
 
   const handleMovieRate = (i : number) => {
-    onRateMovie(movie.id, i);
+    rateMovie(movie.id, i);
   };
 
   return (

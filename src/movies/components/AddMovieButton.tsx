@@ -1,7 +1,11 @@
+import { useMovies } from "movies/MovieContext";
+
 export function AddMovieButton({ toggleAddForm }: any) {
 
+    const { toggleShowAddMovieForm } = useMovies();
+  
   const handleToggle = () => {
-    toggleAddForm();
+    toggleShowAddMovieForm();
   };
 
   return (
