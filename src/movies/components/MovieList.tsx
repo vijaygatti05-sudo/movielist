@@ -3,41 +3,49 @@ import { AddMovieButton } from "./AddMovieButton";
 import { AddMovieForm } from "./AddMovieForm";
 import { Card } from "shared/components";
 import { getInitialMovies } from "data/initial";
-import { useState } from "react";
 import { Movie } from "movies/MovieModel";
+import { useReducer } from "react";
+import { State, Action, movieReducer } from "movies/MoviesRecuder";
+
+
 
 export const MovieList = () => {
-  const [movies, setMovies] = useState(getInitialMovies());
-  const [showAddMovieForm, setShowAddMovieForm] = useState(false);
+
+  const initialState: State = {
+    movies: getInitialMovies(),
+    showAddMovieForm: false,
+  };
+
+    const [state, dispatch] = useReducer(movieReducer, initialState);
 
   const addMovie = (newMovie: Movie) => {
-    setMovies(prev => [...prev, newMovie]);
+    dispatch({
+                type: "ADD_MOVIE",
+                payload: newMovie,
+              })
   };
 
    const deleteMovie = (id : string) => {
-    setMovies(prev => prev.filter(movie => movie.id !== id));
+    dispatch({ type: "DELETE_MOVIE", payload: id })
   };
 
 
   const rateMovie = (id: string, rating: number) => {
-    setMovies(prev =>
-      prev.map(movie =>
-        movie.id === id
-          ? { ...movie, ratings: [...movie.ratings, rating] }
-          : movie
-      )
-    );
+    dispatch({
+      type: "RATE_MOVIE",
+      payload: { id, rating },
+    })
   };
 
   const toggleShowAddMovieForm = () => {
-    setShowAddMovieForm(prev => !prev );
+    dispatch({ type: "TOGGLE_ADD_FORM" })
   };
 
 
   return (
     <div className="card-deck">
-      {movies.map((movie, index) => (
-        <Card key={index}>
+      {state.movies.map((movie) => (
+        <Card key={movie.id}>
           {/* TODO: implement displaying movies list */}
           <MovieCard movie={movie}  onDeleteMovie={deleteMovie} onRateMovie={rateMovie}/>
         </Card>
@@ -46,7 +54,7 @@ export const MovieList = () => {
       <Card>
         <AddMovieButton toggleAddForm={toggleShowAddMovieForm} />
       </Card>
-      { showAddMovieForm &&
+      { state.showAddMovieForm &&
         <Card>
           <AddMovieForm onAddMovie={addMovie}/>
         </Card>
