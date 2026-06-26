@@ -2,6 +2,7 @@ import "./App.css";
 
 import { Header } from "./shared/components";
 import { MovieList } from "./movies/components";
+import { MovieProvider } from "movies/MovieContext";
 
 function App() {
   return (
@@ -11,7 +12,9 @@ function App() {
         <div className="container-fluid">
           <div className="d-flex flex-row">
             <div className="col-sm-12">
-              <MovieList />
+              <MovieProvider>
+                <MovieList />
+              </MovieProvider>
             </div>
           </div>
         </div>

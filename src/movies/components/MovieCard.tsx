@@ -1,7 +1,6 @@
 import { StarRating, Button } from "shared/components";
 
-import { getAvgRating, Movie } from "movies/MovieModel";
-import { getInitialMovies } from "data/initial";
+import { getAvgRating } from "movies/MovieModel";
 
 
 export const MovieCard = ({ movie, onDeleteMovie, onRateMovie }: any) => {
