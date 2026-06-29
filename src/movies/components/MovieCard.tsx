@@ -2,9 +2,14 @@ import { StarRating, Button } from "shared/components";
 
 import { getAvgRating } from "movies/MovieModel";
 
+import { useMemo } from "react";
 
 export const MovieCard = ({ movie, onDeleteMovie, onRateMovie }: any) => {
-  const movieRating = getAvgRating(movie);
+  // const movieRating = getAvgRating(movie);
+
+  const movieRating = useMemo(() => {
+    return  getAvgRating(movie);
+  }, [movie]);
 
   const handleDelete = () => {
     onDeleteMovie(movie.id);    

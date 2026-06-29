@@ -3,13 +3,46 @@ import { AddMovieButton } from "./AddMovieButton";
 import { AddMovieForm } from "./AddMovieForm";
 import { Card } from "shared/components";
 import { useMovies } from "movies/MovieContext";
+// import { useMemo } from "react";
 
 export const MovieList = () => {
  
   const { state, dispatch } = useMovies();
 
+  // const topMovie = useMemo(() => {
+  //   console.log(
+  //     "Finding top movie..."
+  //   );
+
+  //   const start = Date.now();
+
+  //   // Block the main thread for 5 seconds
+  //   while (Date.now() - start < 2000) {}  
+
+  //   return [...state.movies]
+  //     .sort((a, b) => {
+  //       const avgA =
+  //         a.ratings.length
+  //           ? a.ratings.reduce(
+  //               (x, y) => x + y,
+  //               0
+  //             ) / a.ratings.length
+  //           : 0;
+
+  //       const avgB =
+  //         b.ratings.length
+  //           ? b.ratings.reduce(
+  //               (x, y) => x + y,
+  //               0
+  //             ) / b.ratings.length
+  //           : 0;
+
+  //       return avgB - avgA;
+  //     })[0];
+  // }, [state.movies]);
 
   return (
+    <div>
     <div className="card-deck">
       {state.movies.map((movie, index) => (
         <Card key={movie.id}>
@@ -35,6 +68,10 @@ export const MovieList = () => {
           <AddMovieForm/>
         </Card>
       }
+    </div>
+          {/* <div>
+          Top Movie: {topMovie.title}
+      </div> */}
     </div>
   );
 };

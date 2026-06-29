@@ -14,6 +14,7 @@ function to2(num: number) {
 }
 
 export function getAvgRating(movie: Movie) {
+  // console.log("getavg rating" + movie.id);
   if (movie.ratings.length === 0) {
     return 0;
   }
