@@ -11,13 +11,14 @@ import {
   MovieAction,
 } from "./MovieReducer";
 import { getInitialMovies } from "data/initial";
+import { Movie } from "./MovieModel";
 
 type MovieContextType = {
   state: MovieState;
   dispatch: React.Dispatch<MovieAction>;
 };
 
-const MovieContext = createContext<MovieContextType | null>(null);
+export const MovieContext = createContext<MovieContextType | null>(null);
 
 type Props = {
   children: ReactNode;
@@ -52,5 +53,24 @@ export function useMovies() {
     );
   }
 
-  return context;
+    const deleteMovie =  (id: string ) => context?.dispatch({
+                type: "DELETE_MOVIE",
+                payload: id,
+              });
+
+    const rateMovie = (id : string, rating : number ) => context?.dispatch({
+                    type: "RATE_MOVIE",
+                    payload: { id, rating },
+                  });
+
+
+    const  toggleAddForm=() => context.dispatch({
+                type: "TOGGLE_ADD_FORM"
+              });
+          
+    const addMovie = (movie: Movie) => context.dispatch({
+      type: "ADD_MOVIE",
+      payload: movie
+    }); 
+  return {...context, deleteMovie, rateMovie, toggleAddForm, addMovie};
 }

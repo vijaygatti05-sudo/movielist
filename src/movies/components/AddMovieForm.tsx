@@ -11,21 +11,18 @@ export function AddMovieForm() {
   const [description, setDescription] = useState("???");
 
 
-  const { dispatch } = useMovies();
+  const { addMovie } = useMovies();
 
   const handleSubmit = () => {
     
-    dispatch({
-      type: "ADD_MOVIE",
-      payload: {
+    addMovie({
         id: crypto.randomUUID(),
         imageUrl : "./Kingsglaive_Final_Fantasy_XV.jpg",
         title,
         subtitle,
         description,
         ratings : []
-      }
-    });
+      });
 
     clearFields();
   };
