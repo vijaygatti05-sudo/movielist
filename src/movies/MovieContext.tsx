@@ -9,13 +9,18 @@ import {
   movieReducer,
   MovieState,
   MovieAction,
+  UIState,
+  UIReducer,
+  UIAction,
 } from "./MovieReducer";
 import { getInitialMovies } from "data/initial";
 import { Movie } from "./MovieModel";
 
 type MovieContextType = {
-  state: MovieState;
-  dispatch: React.Dispatch<MovieAction>;
+  movieState: MovieState;
+  movieDispatch: React.Dispatch<MovieAction>;
+  UIState: UIState;
+  UIDispatch: React.Dispatch<UIAction>;
 };
 
 export const MovieContext = createContext<MovieContextType | null>(null);
@@ -24,21 +29,29 @@ type Props = {
   children: ReactNode;
 };
 
-export const initialState: MovieState = {
+export const initialMovieState: MovieState = {
   movies: getInitialMovies(),
+};
+
+export const initialUIState: UIState = {
   showAddMovieForm: false,
 };
 
 export function MovieProvider({ children }: Props) {
-  const [state, dispatch] = useReducer(
+  const [ movieState , movieDispatch] = useReducer(
     movieReducer,
-    initialState
+    initialMovieState
   );
+
+    const [ UIState , UIDispatch] = useReducer(
+    UIReducer,
+    initialUIState
+  );
+
 
   return (
     <MovieContext.Provider
-      value={{ state, dispatch }}
-    >
+      value={{ movieState , movieDispatch, UIState , UIDispatch }}>
       {children}
     </MovieContext.Provider>
   );
@@ -53,22 +66,22 @@ export function useMovies() {
     );
   }
 
-    const deleteMovie =  (id: string ) => context?.dispatch({
+    const deleteMovie =  (id: string ) => context?.movieDispatch({
                 type: "DELETE_MOVIE",
                 payload: id,
               });
 
-    const rateMovie = (id : string, rating : number ) => context?.dispatch({
+    const rateMovie = (id : string, rating : number ) => context?.movieDispatch({
                     type: "RATE_MOVIE",
                     payload: { id, rating },
                   });
 
 
-    const  toggleAddForm=() => context.dispatch({
+    const  toggleAddForm=() => context?.UIDispatch({
                 type: "TOGGLE_ADD_FORM"
               });
           
-    const addMovie = (movie: Movie) => context.dispatch({
+    const addMovie = (movie: Movie) => context.movieDispatch({
       type: "ADD_MOVIE",
       payload: movie
     }); 

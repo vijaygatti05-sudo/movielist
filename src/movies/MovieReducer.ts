@@ -3,14 +3,19 @@ import { getInitialMovies } from "data/initial";
 
 export type MovieState = {
   movies: Movie[];
-  showAddMovieForm: boolean;
 };
 
 export type MovieAction =
   | { type: "ADD_MOVIE"; payload: Movie }
   | { type: "DELETE_MOVIE"; payload: string }
-  | { type: "RATE_MOVIE"; payload: { id: string; rating: number } }
-  | { type: "TOGGLE_ADD_FORM" };
+  | { type: "RATE_MOVIE"; payload: { id: string; rating: number } };
+
+  export type UIAction = | { type: "TOGGLE_ADD_FORM" };
+
+
+export type UIState = {
+  showAddMovieForm: boolean;
+};
 
 
 export function movieReducer( state: MovieState, action: MovieAction ): MovieState {
@@ -45,6 +50,19 @@ export function movieReducer( state: MovieState, action: MovieAction ): MovieSta
         ),
       };
 
+    // case "TOGGLE_ADD_FORM":
+    //   return {
+    //     ...state,
+    //     showAddMovieForm: !state.showAddMovieForm,
+    //   };
+
+    default:
+      return state;
+  }
+}
+
+export function UIReducer( state: UIState, action: UIAction ): UIState {
+  switch (action.type) {
     case "TOGGLE_ADD_FORM":
       return {
         ...state,

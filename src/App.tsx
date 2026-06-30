@@ -4,20 +4,27 @@ import { Header } from "./shared/components";
 import { MovieList } from "./movies/components";
 import { MovieContext, MovieProvider } from "movies/MovieContext";
 import { getInitialMovies } from "data/initial";
-import { movieReducer, MovieState } from "movies/MovieReducer";
+import { movieReducer, MovieState, UIReducer, UIState } from "movies/MovieReducer";
 import { useReducer } from "react";
 
 function App() {
-  const initialState: MovieState = {
+  const initialmovieState: MovieState = {
     movies: getInitialMovies(),
+  };
+  
+  const initialUIState: UIState = {
     showAddMovieForm: false,
   };
   
-    const [state, dispatch] = useReducer(
+    const [movieState, movieDispatch] = useReducer(
       movieReducer,
-      initialState
+      initialmovieState
     );
     
+    const [UIState, UIDispatch] = useReducer(
+      UIReducer,
+      initialUIState
+    );
   return (
     <div className="App">
       <Header title="React Movie Management Application" />
@@ -26,7 +33,7 @@ function App() {
           <div className="d-flex flex-row">
             <div className="col-sm-12">
               <div><h1>MovieContext Provider</h1> </div>
-              <MovieContext.Provider value={{state, dispatch}}>
+              <MovieContext.Provider value={{movieState, movieDispatch, UIState, UIDispatch}}>
                 <MovieList />
               </MovieContext.Provider>
               <div><h1>MovieProvider</h1></div>

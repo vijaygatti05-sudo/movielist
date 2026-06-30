@@ -7,7 +7,7 @@ import { useMovies } from "movies/MovieContext";
 
 export const MovieList = () => {
  
-  const { state, dispatch, deleteMovie, rateMovie, toggleAddForm } = useMovies();
+  const { movieState, movieDispatch, UIState, deleteMovie, rateMovie, toggleAddForm } = useMovies();
 
   // const topMovie = useMemo(() => {
   //   console.log(
@@ -44,7 +44,7 @@ export const MovieList = () => {
   return (
     <div>
     <div className="card-deck">
-      {state.movies.map((movie, index) => (
+      {movieState.movies.map((movie, index) => (
         <Card key={movie.id}>
           <MovieCard movie={movie}             
               onDeleteMovie={deleteMovie}
@@ -54,7 +54,7 @@ export const MovieList = () => {
       <Card>
         <AddMovieButton toggleAddForm={toggleAddForm} />
       </Card>
-      { state.showAddMovieForm &&
+      { UIState.showAddMovieForm &&
         <Card>
           <AddMovieForm/>
         </Card>
