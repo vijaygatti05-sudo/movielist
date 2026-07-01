@@ -3,6 +3,7 @@ import {
   useContext,
   useReducer,
   ReactNode,
+  useCallback,
 } from "react";
 
 import {
@@ -66,24 +67,50 @@ export function useMovies() {
     );
   }
 
-    const deleteMovie =  (id: string ) => context?.movieDispatch({
+    // const deleteMovie =  (id: string ) => context?.movieDispatch({
+    //             type: "DELETE_MOVIE",
+    //             payload: id,
+    //           });
+
+    // const rateMovie = (id : string, rating : number ) => context?.movieDispatch({
+    //                 type: "RATE_MOVIE",
+    //                 payload: { id, rating },
+    //               });
+
+    const deleteMovie = useCallback(
+        (id: string ) => context?.movieDispatch({
                 type: "DELETE_MOVIE",
                 payload: id,
-              });
+              }),
+        []
+    );
 
-    const rateMovie = (id : string, rating : number ) => context?.movieDispatch({
+    const rateMovie = useCallback(
+        (id : string, rating : number ) => context?.movieDispatch({
                     type: "RATE_MOVIE",
                     payload: { id, rating },
-                  });
+                  }),
+        []
+    );
 
+        const initMovies = useCallback(
+        (movies : Movie[] ) => context?.movieDispatch({
+                    type: "INIT_MOVIE",
+                    payload: movies,
+                  }),
+        []
+    );
 
-    const  toggleAddForm=() => context?.UIDispatch({
+    const  toggleAddForm=useCallback(
+      () => context?.UIDispatch({
                 type: "TOGGLE_ADD_FORM"
-              });
+              }),
+        []
+    );
           
     const addMovie = (movie: Movie) => context.movieDispatch({
       type: "ADD_MOVIE",
       payload: movie
     }); 
-  return {...context, deleteMovie, rateMovie, toggleAddForm, addMovie};
+  return {...context, deleteMovie, rateMovie, toggleAddForm, addMovie, initMovies};
 }

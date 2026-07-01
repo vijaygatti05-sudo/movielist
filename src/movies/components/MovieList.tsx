@@ -3,11 +3,62 @@ import { AddMovieButton } from "./AddMovieButton";
 import { AddMovieForm } from "./AddMovieForm";
 import { Card } from "shared/components";
 import { useMovies } from "movies/MovieContext";
+import { Movie } from "movies/MovieModel";
+import { useEffect } from "react";
 // import { useMemo } from "react";
 
 export const MovieList = () => {
  
-  const { movieState, movieDispatch, UIState, deleteMovie, rateMovie, toggleAddForm } = useMovies();
+  const delay = () => new Promise(res => setTimeout(res, 1000));
+
+
+  const { movieState, UIState, deleteMovie, rateMovie, toggleAddForm } = useMovies();
+
+    const { initMovies } = useMovies();
+  
+    const getMovies = async (): Promise<Movie[]> => {
+
+    console.log("getMovies");
+    
+    // await delay(); 
+    const response = await fetch("http://localhost:5089/movies");
+    
+    
+    if (!response.ok) {
+      throw new Error("Failed to fetch movies");
+    }
+
+        console.log(response);
+
+    const data1 = await response.json();
+    console.log(data1);
+
+    // console.log("calling async getinitialmovies");
+    // const data = getInitialMovies();
+    return data1;
+  };
+
+  useEffect(() => {
+    const loadMovies = async () => {
+
+      if(movieState?.movies?.length > 0)
+        {
+          return;
+        }
+
+      try 
+      {
+        const movies = await getMovies();
+        initMovies(movies);
+
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    loadMovies();
+  }, []);
+
 
   // const topMovie = useMemo(() => {
   //   console.log(

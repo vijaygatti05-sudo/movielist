@@ -3,13 +3,12 @@ import "./App.css";
 import { Header } from "./shared/components";
 import { MovieList } from "./movies/components";
 import { MovieContext, MovieProvider } from "movies/MovieContext";
-import { getInitialMovies } from "data/initial";
 import { movieReducer, MovieState, UIReducer, UIState } from "movies/MovieReducer";
 import { useReducer } from "react";
 
 function App() {
   const initialmovieState: MovieState = {
-    movies: getInitialMovies(),
+    movies: [],
   };
   
   const initialUIState: UIState = {

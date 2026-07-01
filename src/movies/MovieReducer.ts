@@ -1,11 +1,11 @@
 import { Movie } from "./MovieModel";
-import { getInitialMovies } from "data/initial";
 
 export type MovieState = {
   movies: Movie[];
 };
 
 export type MovieAction =
+  | { type: "INIT_MOVIE"; payload: Movie[] } 
   | { type: "ADD_MOVIE"; payload: Movie }
   | { type: "DELETE_MOVIE"; payload: string }
   | { type: "RATE_MOVIE"; payload: { id: string; rating: number } };
@@ -20,6 +20,12 @@ export type UIState = {
 
 export function movieReducer( state: MovieState, action: MovieAction ): MovieState {
   switch (action.type) {
+    case "INIT_MOVIE":
+      return {
+        ...state,
+        movies: action.payload,
+      };
+
     case "ADD_MOVIE":
       return {
         ...state,
@@ -49,12 +55,6 @@ export function movieReducer( state: MovieState, action: MovieAction ): MovieSta
             : movie
         ),
       };
-
-    // case "TOGGLE_ADD_FORM":
-    //   return {
-    //     ...state,
-    //     showAddMovieForm: !state.showAddMovieForm,
-    //   };
 
     default:
       return state;
